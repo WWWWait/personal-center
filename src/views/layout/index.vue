@@ -17,28 +17,53 @@
         </div>
       </div>
     </div>
-<div class="main">卧槽</div>
-    <!-- 子路由出口 -->
-    <!-- <router-view></router-view> -->
-    <nav-aside/>
+    <div class="main">
+      <!-- <router-link to="@/views/navaside/center/"></router-link>
+      <router-view /> -->
+      <router-view></router-view>
+      <!-- <resume-index></resume-index>
+      <deliver-index></deliver-index>
+      <invite-index></invite-index>
+      <collect-index></collect-index>
+      <browse-index></browse-index>
+      <subscribe-index></subscribe-index>
+      <setup-index></setup-index>
+      <release-index></release-index> -->
+    </div>
+    <nav-aside />
   </div>
 </template>
 
 <script>
 // 引入navaside组件
-import NavAside from '@/views/layout/components/navaside.vue'
+import NavAside from "@/views/layout/components/navaside.vue";
+// import CenterIndex from "@/views/navaside/center/"
+// import ResumeIndex from "@/views/navaside/resume/"
+// import DeliverIndex from "@/views/navaside/deliver/"
+// import InviteIndex from "@/views/navaside/invite/"
+// import CollectIndex from "@/views/navaside/collect/"
+// import BrowseIndex from "@/views/navaside/browse/"
+// import SubscribeIndex from "@/views/navaside/subscribe/"
+// import SetupIndex from "@/views/navaside/setup/"
+// import ReleaseIndex from "@/views/navaside/release/"
 
 export default {
   name: "LayoutIndex",
   data() {
-    return{
-
-    }
-    
+    return {};
   },
-  components:{
-    NavAside
-  }
+  components: {
+    NavAside,
+    // CenterIndex,
+    // ResumeIndex,
+    // DeliverIndex,
+    // InviteIndex,
+    // CollectIndex,
+    // BrowseIndex,
+    // SubscribeIndex,
+    // SetupIndex,
+    // ReleaseIndex
+  },
 };
 </script>
 
@@ -121,9 +146,9 @@ export default {
 }
 
 .main {
-  position: absolute;
+  position: relative;
   left: 210px;
-  top: 72px;
+  top: 16px;
   width: 1180px;
   height: 200px;
   background-color: red;

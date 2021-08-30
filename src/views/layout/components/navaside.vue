@@ -37,7 +37,7 @@ export default {
         "collect",
         "browse",
         "subscribe",
-        "set up",
+        "setup",
         "release",
       ],
       isActive: 0,
