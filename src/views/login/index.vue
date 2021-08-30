@@ -1,6 +1,8 @@
 // 登陆相关组件
 <template>
-  <div>登陆界面</div>
+  <div class="login-container">
+      
+  </div>
 </template>
 
 <script>
