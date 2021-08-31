@@ -104,7 +104,6 @@ export default {
   display: inline-block;
   width: 1280px;
   height: 56px;
-  background: #ffffff;
   box-shadow: 0px 2px 4px 0px rgba(204, 204, 204, 0.2);
 }
 
@@ -123,13 +122,11 @@ export default {
   font-weight: 400;
   color: #666666;
   line-height: 24px;
-  background-color: #fff;
 }
 .nav-details {
   position: absolute;
   right: 50px;
   top: 16px;
-  background-color: #fff;
 }
 
 .nav-details a {
@@ -142,7 +139,6 @@ export default {
   color: #666666;
   line-height: 20px;
   margin-left: 29px;
-  background-color: #fff;
 }
 
 .main {
@@ -151,6 +147,6 @@ export default {
   top: 16px;
   width: 1180px;
   height: 200px;
-  background-color: red;
+  /* background-color: red; */
 }
 </style>

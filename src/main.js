@@ -8,8 +8,9 @@ import router from './router'
 
 import store from './store'
 
-
+// 加载ElementPlus样式
 import ElementPlus from 'element-plus'
+
 import 'element-plus/dist/index.css'
 
 //加载全局样式文件
