@@ -1,21 +1,26 @@
-// 侧边栏组件
 <template>
-  <div class="nav-aside">
-    <ul>
-      <li
-        v-for="(i, index) in Aside"
-        :class="{ Active: isActive == index }"
-        @click="AsideClick(index)"
-      >
-        {{ i }}
-      </li>
-    </ul>
+  <div class="aside-nav">
+      <div class="aside-header">
+    <span>招聘个人中心</span>
+  
+    <div class="aside-details">
+      <ul>
+        <li
+          v-for="(i, index) in Aside"
+          :class="{ Active: isActive == index }"
+          @click="AsideClick(index)"
+        >
+          {{ i }}
+        </li>
+      </ul>
+    </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "NavAside",
+  name: "AppAside",
   data() {
     return {
       Aside: [
@@ -41,13 +46,14 @@ export default {
         "release",
       ],
       isActive: 0,
+      index: ''
     };
   },
   methods: {
     AsideClick(index) {
       this.isActive = index;
-      console.log(index);
       let msg = this.ditails;
+      this.$emit("itemclick",index);
       // 侧边导航栏路由跳转
       this.$router.push("/" + msg[index]);
     },
@@ -56,16 +62,32 @@ export default {
 </script>
 
 <style>
-.nav-aside {
+.aside-nav {
   position: fixed;
   left: 0;
-  top: 56px;
+  top: 0;
+  right: 0;
+  bottom: 0;
   width: 160px;
-  height: 2032px;
+  min-height: 100px;
   background: #b1c0d1;
 }
 
-.nav-aside li {
+.aside-header {
+  width: 160px;
+  height: 56px;
+  text-align: center;
+  background-color: #3374e9;
+}
+.aside-header span {
+  font-size: 16px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: 500;
+  color: #adc7f6;
+  line-height: 56px;
+}
+
+.aside-nav li {
   width: 160px;
   height: 60px;
   text-align: center;
@@ -75,9 +97,10 @@ export default {
   font-weight: 500;
   color: #666666;
   background-color: #b1c0d1;
+  cursor: pointer;
 }
 
-.nav-aside ul .Active {
+.aside-nav ul .Active {
   background-color: #fff;
 }
 </style>

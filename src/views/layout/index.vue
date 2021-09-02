@@ -1,51 +1,36 @@
 <template>
   <!-- 外层组件 -->
   <div class="layout-container">
+    <!-- 头部 -->
     <div class="header">
-      <div class="recuit">
-        <span>招聘个人中心</span>
-      </div>
       <div class="nav-top">
         <div class="person-resume">
-          <a href="">我的简历</a>
+          <span @click="resumeClick">我的简历</span>
         </div>
         <div class="nav-details">
-          <a href="">访问网站</a>
-          <a href="">面试邀请</a>
-          <a href="">我的简历</a>
-          <a href="">陈长生</a>
+          <span>访问网站</span>
+          <span @click="inviteClick">面试邀请</span>
+          <span @click="resumeClick">我的简历</span>
+          <span>陈长生</span>
         </div>
       </div>
     </div>
+
+    <!-- 主体 -->
     <div class="main">
-      <!-- <router-link to="@/views/navaside/center/"></router-link>
-      <router-view /> -->
+      <!-- 主体子路由入口 -->
       <router-view></router-view>
-      <!-- <resume-index></resume-index>
-      <deliver-index></deliver-index>
-      <invite-index></invite-index>
-      <collect-index></collect-index>
-      <browse-index></browse-index>
-      <subscribe-index></subscribe-index>
-      <setup-index></setup-index>
-      <release-index></release-index> -->
     </div>
-    <nav-aside />
+
+    <!-- 侧边栏 -->
+    <app-aside ref="aaa" />
   </div>
 </template>
 
 <script>
 // 引入navaside组件
-import NavAside from "@/views/layout/components/navaside.vue";
-// import CenterIndex from "@/views/navaside/center/"
-// import ResumeIndex from "@/views/navaside/resume/"
-// import DeliverIndex from "@/views/navaside/deliver/"
-// import InviteIndex from "@/views/navaside/invite/"
-// import CollectIndex from "@/views/navaside/collect/"
-// import BrowseIndex from "@/views/navaside/browse/"
-// import SubscribeIndex from "@/views/navaside/subscribe/"
-// import SetupIndex from "@/views/navaside/setup/"
-// import ReleaseIndex from "@/views/navaside/release/"
+import AppAside from "@/views/layout/components/aside.vue";
+// import { getUserProfile } from "@/api/user.js";
 
 export default {
   name: "LayoutIndex",
@@ -53,16 +38,27 @@ export default {
     return {};
   },
   components: {
-    NavAside,
-    // CenterIndex,
-    // ResumeIndex,
-    // DeliverIndex,
-    // InviteIndex,
-    // CollectIndex,
-    // BrowseIndex,
-    // SubscribeIndex,
-    // SetupIndex,
-    // ReleaseIndex
+    AppAside,
+    // created() {
+    //   // 组件初始化完成，请求用户资料
+    //   this.loadUserProfile();
+    // },
+    methods: {
+      // loadUserProfile() {
+      //   getUserProfile().then(res=>{
+      //     console.log(res);
+      //   })
+      // },
+    },
+  },
+
+  methods: {
+    inviteClick() {
+      this.$router.push("/invite");
+    },
+    resumeClick() {
+      this.$router.push("/resume");
+    },
   },
 };
 </script>
@@ -113,7 +109,7 @@ export default {
   top: 18px;
 }
 
-.person-resume a {
+.person-resume span {
   display: inline-block;
   width: 56px;
   height: 24px;
@@ -121,6 +117,7 @@ export default {
   font-family: PingFang-SC-Regular, PingFang-SC;
   font-weight: 400;
   color: #666666;
+  cursor: pointer;
   line-height: 24px;
 }
 .nav-details {
@@ -129,7 +126,7 @@ export default {
   top: 16px;
 }
 
-.nav-details a {
+.nav-details span {
   display: inline-block;
   width: 57px;
   height: 20px;
@@ -139,6 +136,7 @@ export default {
   color: #666666;
   line-height: 20px;
   margin-left: 29px;
+  cursor: pointer;
 }
 
 .main {
@@ -147,6 +145,5 @@ export default {
   top: 16px;
   width: 1180px;
   height: 200px;
-  /* background-color: red; */
 }
 </style>

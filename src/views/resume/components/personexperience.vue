@@ -22,48 +22,55 @@
         <p>5.公司项目的部署发布，包括后续的更新和维护</p>
       </div>
     </div> -->
-    <div class="exp-main" :class="{ show: isShow }">
-      <div class="experience-1">
-        <span class="company">{{ ruleForm.name }}</span
-        >| <span class="position">{{ ruleForm.position }}</span
-        >|
-        <!-- <span class="times">{{ruleForm.time}}</span> -->
-      </div>
-      <div class="experience-details">
-        {{ ruleForm.desc }}
-      </div>
+    <div class="noExp" @click="getHas" v-if="isHas" >
+      <span>+ 添加工作经历</span>
     </div>
+    <div class="expAll" v-else>
+      <div class="exp-main" :class="{ show: isShow }">
+        <div class="experience-1">
+          <span class="company">{{ ruleForm.name }}</span
+          >| <span class="position">{{ ruleForm.position }}</span
+          >|
+          <!-- <span class="times">{{ruleForm.time}}</span> -->
+        </div>
+        <div class="experience-details" style="white-space: pre-line">
+          {{ ruleForm.desc }}
+        </div>
+      </div>
 
-    <div class="addExp" :class="{ show: !isShow }">
-      <el-form
-        :model="ruleForm"
-        :rules="rules"
-        ref="ruleForm"
-        label-width="200px"
-        class="demo-ruleForm"
-      >
-        <el-form-item label="公司名称" prop="name">
-          <el-input v-model="ruleForm.name"></el-input>
-        </el-form-item>
+      <div class="addExp" :class="{ show: !isShow }">
+        <el-form
+          :model="ruleForm"
+          :rules="rules"
+          ref="ruleForm"
+          label-width="200px"
+          class="demo-ruleForm"
+        >
+          <el-form-item label="公司名称" prop="name">
+            <el-input v-model="ruleForm.name"></el-input>
+          </el-form-item>
 
-        <el-form-item label="岗位" prop="position">
-          <el-input v-model="ruleForm.position"> </el-input>
-        </el-form-item>
+          <el-form-item label="岗位" prop="position">
+            <el-input v-model="ruleForm.position"> </el-input>
+          </el-form-item>
 
-        <el-form-item label="工作内容" prop="desc">
-          <el-input
-            type="textarea"
-            v-model="ruleForm.desc"
-            resize="none"
-            rows="6"
-          ></el-input>
-        </el-form-item>
+          <el-form-item label="工作内容" prop="desc">
+            <el-input
+              type="textarea"
+              v-model="ruleForm.desc"
+              resize="none"
+              rows="6"
+            ></el-input>
+          </el-form-item>
 
-        <el-form-item>
-          <el-button type="primary" @click="hideClick">添加</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
-        </el-form-item>
-      </el-form>
+          <el-form-item>
+            <el-button type="primary" 
+             @click="submitForm('ruleForm');hideClick()"
+            >添加</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
     </div>
   </div>
 </template>
@@ -73,7 +80,8 @@ export default {
   name: "PersonExperience",
   data() {
     return {
-      isShow: false,
+      isShow: true,
+      isHas: true,
       value1: "",
       ruleForm: {
         name: "",
@@ -101,6 +109,20 @@ export default {
     hideClick() {
       this.isShow = false;
     },
+    getHas() {
+      this.isHas = false;
+      this.isShow = true;
+    },
+     submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            '';
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
@@ -113,12 +135,13 @@ export default {
   position: relative;
   left: 0;
   top: 16px;
-  height: 924px;
+  min-height: 350px;
   background-color: #f8f9fb;
   font-size: 14px;
   font-family: PingFang-SC-Regular, PingFang-SC;
   font-weight: 400;
   color: #333333;
+  overflow: hidden;
 }
 
 .experience-header {
@@ -179,10 +202,29 @@ export default {
   position: relative;
   left: 40px;
   top: 14px;
+  font-size: 14px;
+  font-family: PingFang-SC-Regular, PingFang-SC;
+  font-weight: 400;
+  line-height: 25px;
 }
 
 .experience-details p {
   margin-top: 12px;
+}
+
+.noExp {
+  position: absolute;
+  left: 240px;
+  top: 150px;
+  bottom: 150px;
+  width: 600px;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  color: #4a88f7;
+  cursor: pointer;
+  border: 1px dashed #bfbfbf;
+  background-color: #f4f3f3;
 }
 
 .show {

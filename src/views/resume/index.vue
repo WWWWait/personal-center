@@ -55,9 +55,9 @@
 </template>
 
 <script>
-import PersonBase from './components/presonbase.vue'
-import PersonPurpose from './components/personpurpose.vue'
-import PersonExperience from './components/personexperience.vue'
+import PersonBase from '../resume/components/presonbase.vue'
+import PersonPurpose from '../resume/components/personpurpose.vue'
+import PersonExperience from '../resume/components/personexperience.vue'
 
 export default {
   name: "ResumeIndex",

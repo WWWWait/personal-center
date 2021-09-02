@@ -3,9 +3,6 @@ import {
   createWebHashHistory
 } from 'vue-router'
 
-// 引入登陆页面
-// import Login from '@/views/login/index.vue'
-
 
 // 路由配置表
 const routes = [{
@@ -14,7 +11,7 @@ const routes = [{
 
     name: 'login',
 
-    component: () => import('@/views/login/index.vue')
+    component: () => import('@/views/login/')
 
   },
 
@@ -41,7 +38,7 @@ const routes = [{
 
         name: 'center',
 
-        component: () => import('@/views/navaside/center/')
+        component: () => import('@/views/center/')
       },
       {
         //我的简历
@@ -49,7 +46,7 @@ const routes = [{
 
         name: 'resume',
 
-        component: () => import('@/views/navaside/resume/')
+        component: () => import('@/views/resume/')
       },
       {
         //投递记录
@@ -57,7 +54,7 @@ const routes = [{
 
         name: 'deliver',
 
-        component: () => import('@/views/navaside/deliver/')
+        component: () => import('@/views/deliver/')
       },
       {
         //面试邀请
@@ -65,7 +62,7 @@ const routes = [{
 
         name: 'invite',
 
-        component: () => import('@/views/navaside/invite/')
+        component: () => import('@/views/invite/')
       },
       {
         //收藏信息
@@ -73,7 +70,7 @@ const routes = [{
 
         name: 'collect',
 
-        component: () => import('@/views/navaside/collect/')
+        component: () => import('@/views/collect/')
       },
       {
         //浏览记录
@@ -81,7 +78,7 @@ const routes = [{
 
         name: 'browse',
 
-        component: () => import('@/views/navaside/browse/')
+        component: () => import('@/views/browse/')
       },
       {
         //我的订阅
@@ -89,7 +86,7 @@ const routes = [{
 
         name: 'subscribe',
 
-        component: () => import('@/views/navaside/subscribe/')
+        component: () => import('@/views/subscribe/')
       },
       {
         //账号设置
@@ -97,7 +94,7 @@ const routes = [{
 
         name: 'setup',
 
-        component: () => import('@/views/navaside/setup/')
+        component: () => import('@/views/setup/')
       },
       {
         //发布招聘
@@ -105,7 +102,7 @@ const routes = [{
 
         name: 'release',
 
-        component: () => import('@/views/navaside/release/')
+        component: () => import('@/views/release/')
       }
     ]
   }

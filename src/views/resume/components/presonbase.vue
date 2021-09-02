@@ -54,7 +54,7 @@
         <div class="work">
           <p>
             <img src="" alt="" />
-            入狱经历
+            工作经历
           </p>
           <select id="work">
             <option v-for="i in workExp" :value="i">{{ i }}</option>

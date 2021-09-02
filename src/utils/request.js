@@ -6,7 +6,7 @@ import axios from 'axios'
 // 创建实例,通过该实例发送配置请求
 const request = axios.create({
 
-    baseURL: 'http://ttapi.research.itcast.cn' //请求基础路径
+    baseURL: 'http://api-toutiao-web.itheima.net' //请求基础路径
 
 })
 
