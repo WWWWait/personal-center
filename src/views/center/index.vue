@@ -70,20 +70,37 @@
     </div>
 
     <!-- 个人中心--关注的企业 -->
-    <div class="center-work"></div>
+    <div class="center-work">
+      <center-browse></center-browse>
+    </div>
 
     <!-- 个人中心--推荐工作 -->
-    <div class="center-recommend"></div>
+    <div class="center-recommend">
+      <div class="recommend-header">
+        <span
+          style="font-size: 16px;
+  font-family: PingFang-SC-Medium, PingFang-SC;
+  font-weight: bolder;color:#333;"
+          >职位推荐
+        </span>
+        <span>换一批</span>
+      </div>
+      <div class="recommend-end">
+        <span>暂无推荐职位</span>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import CollectMessage from "./components/collectmessage.vue";
+import CenterBrowse from "./components/centerbrowse.vue";
 
 export default {
   name: "CenterIndex",
   components: {
     CollectMessage,
+    CenterBrowse,
   },
   methods: {
     revise() {
@@ -245,13 +262,61 @@ export default {
 }
 
 .center-coll {
-  position: fixed;
-  left: 210px;
-  top: 373px;
+  position: relative;
+  left: 0px;
+  top: 20px;
   right: 0;
   bottom: 0;
   width: 1180px;
-  min-height: 110px;
+  height: 350px;
   background-color: #fff;
+}
+
+.center-work {
+  position: relative;
+  left: 0px;
+  top: 40px;
+  width: 1180px;
+  height: 290px;
+  background-color: #fff;
+}
+
+.center-recommend {
+  position: relative;
+  left: 0;
+  top: 60px;
+  width: 1180px;
+  min-height: 200px;
+  padding-left: 20px;
+  background-color: #fff;
+}
+
+.recommend-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding-right: 20px;
+}
+
+.recommend-header span {
+  font-size: 14px;
+  font-family: PingFang-SC-Regular, PingFang-SC;
+  font-weight: 400;
+  cursor: pointer;
+  color: #999999;
+}
+
+.recommend-end {
+  height: 140px;
+  text-align: center;
+}
+
+.recommend-end span {
+  font-size: 14px;
+  font-family: PingFang-SC-Regular, PingFang-SC;
+  font-weight: 400;
+  color: #cccccc;
+  line-height: 100px;
 }
 </style>

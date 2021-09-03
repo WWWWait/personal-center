@@ -49,19 +49,23 @@
       <button>预览简历</button>
     </div>
   </div>
-  <person-base></person-base>
+  <resume-person></resume-person>
+  <!-- <person-base></person-base> -->
   <person-purpose></person-purpose>
   <person-experience></person-experience>
 </template>
 
 <script>
-import PersonBase from '../resume/components/presonbase.vue'
+import ResumePerson from '../resume/components/resume-person.vue'
+
+import PersonBase from './components/personbase.vue'
 import PersonPurpose from '../resume/components/personpurpose.vue'
 import PersonExperience from '../resume/components/personexperience.vue'
 
 export default {
   name: "ResumeIndex",
   components:{
+    ResumePerson,
     PersonBase,
     PersonPurpose,
     PersonExperience

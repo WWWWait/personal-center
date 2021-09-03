@@ -1,9 +1,5 @@
 <template>
-  <div class="person-massage">
-    <div class="massage-base">
-      <span>基本信息</span>
-      <a>必填</a>
-    </div>
+  <div class="person-massage" :class="{ massageEdit: isShow }">
     <div class="massage-details">
       <form action="">
         <!-- 姓名 -->
@@ -13,7 +9,12 @@
             姓名
           </p>
           <label for="name">
-            <input type="text" name="name" value="请输入您的姓名" />
+            <input
+              type="text"
+              name="name"
+              placeholder="请输入您的姓名"
+              @blur="personName(event)"
+            />
           </label>
         </div>
 
@@ -26,7 +27,7 @@
           <button
             class="man"
             :class="{ btnActive: isActive }"
-            @click="btnClick"
+            @click="btnClick(event)"
           >
             男
           </button>
@@ -57,6 +58,7 @@
             工作经历
           </p>
           <select id="work">
+            <option value="" disabled selected hidden>请选择</option>
             <option v-for="i in workExp" :value="i">{{ i }}</option>
           </select>
         </div>
@@ -68,6 +70,7 @@
             学历
           </p>
           <select id="edu">
+            <option value="" disabled selected hidden>请选择</option>
             <option v-for="i in edu" :value="i">{{ i }}</option>
           </select>
         </div>
@@ -79,6 +82,7 @@
             婚姻状况
           </p>
           <select id="mar">
+            <option value="" disabled selected hidden>请选择</option>
             <option v-for="i in mar" :value="i">{{ i }}</option>
           </select>
         </div>
@@ -90,15 +94,21 @@
             手机
           </p>
           <label for="phone">
-            <input type="text" name="phone" value="请输入您的手机号" />
+            <input
+              type="text"
+              name="phone"
+              placeholder="请输入您的手机号"
+              v-model="inputValue"
+              @blur="btn"
+            />
           </label>
-          <a>修改</a>
+          <a @click="clearClick">修改</a>
         </div>
       </form>
 
       <!-- 保存 -->
       <div class="massage-preserve">
-        <button class="btn-1">保存</button>
+        <button class="btn-1" @click="btnClick1">保存</button>
         <button class="btn-2">取消</button>
       </div>
     </div>
@@ -113,15 +123,15 @@ export default {
       isShow: true,
       isActive: true,
       workExp: [
-        "请选择",
         "一年以下",
         "一年到三年",
         "三年到五年",
         "五年到十年",
         "十年以上",
       ],
-      edu: ["请选择", "高中以下", "高中", "大专", "本科", "硕士", "硕士及以上"],
-      mar: ["请选择", "未婚", "已婚", "离异"],
+      edu: ["高中以下", "高中", "大专", "本科", "硕士", "硕士及以上"],
+      mar: ["未婚", "已婚", "离异"],
+      inputValue: "",
     };
   },
   methods: {
@@ -129,11 +139,26 @@ export default {
       this.isActive = this.isActive ? false : true;
       console.log(this.isActive);
     },
+    clearClick() {
+      this.inputValue = "";
+    },
+    personName($event) {
+      const PN = event.target.value;
+    },
+    btnClick1() {
+      this.$emit("nothing",this.isShow)
+      this.isShow = !this.isShow;
+      // this.isHide = !this.isHide;
+      // localStorage.setItem("PersonName", PN);
+    },
   },
 };
 </script>
 
-<style>
+<style lang="less">
+.massageEdit {
+  display: none;
+}
 .person-massage {
   position: relative;
   left: 0;
@@ -340,7 +365,3 @@ p {
   color: #ffffff;
 }
 </style>
-
-
-
-

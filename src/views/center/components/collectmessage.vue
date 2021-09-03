@@ -1,59 +1,53 @@
 <template>
-  <div class="collect-content" style="height:100%">
-    <!-- 卡片 -->
-    <el-card style="height:100%">
-      <!-- 头部 -->
-      <template #header>
-        <div class="card-header">
-          <span
-            style="font-size: 16px;
+  <div class="collect-content" style="height:100%;padding-left:20px" >
+    <div class="collect-header">
+      <span
+        style="font-size: 16px;
   font-family: PingFang-SC-Medium, PingFang-SC;
   font-weight: bolder;color:#333;"
-            >收藏信息</span
-          >
-          <el-button class="button" type="text">查看更多</el-button>
-        </div>
+        >收藏信息</span
+      >
+      <span>查看更多</span>
+    </div>
 
-        <!-- 主体 -->
-        <table cellpadding="0" cellspacing="0">
-          <thead class="collect-nav">
-            <tr>
-              <th style="width:280px;">职位名称</th>
-              <th style="width:290px">公司名称</th>
-              <th style="width:150px">区域</th>
-              <th style="width:230px">收藏时间</th>
-              <th style="width:72px">操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="collect-main" v-for="(item, index) in tableData">
-              <td>{{ tableData[index].post }}</td>
-              <td>{{ tableData[index].company }}</td>
-              <td>{{ tableData[index].location }}</td>
-              <td>{{ tableData[index].times }}</td>
-              <td
-                @click="throwClick(index)"
-                :style="{
-                  color: item.throw ? 'red' : 'green',
-                  cursor: 'pointer',
-                }"
-              >
-                {{ item.throw ? "投递简历" : "已投递" }}
-              </td>
-              <td
-                @click="collectClick(index)"
-                :style="{
-                  color: item.collect ? 'black' : '#999',
-                  cursor: 'pointer',
-                }"
-              >
-                {{ tableData[index].collect ? "收藏" : "取消收藏" }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </template>
-    </el-card>
+    <!-- 主体 -->
+    <table cellpadding="0" cellspacing="0">
+      <thead class="collect-nav">
+        <tr>
+          <th style="width:280px;">职位名称</th>
+          <th style="width:290px">公司名称</th>
+          <th style="width:150px">区域</th>
+          <th style="width:230px">收藏时间</th>
+          <th style="width:72px">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="collect-main" v-for="(item, index) in tableData">
+          <td>{{ tableData[index].post }}</td>
+          <td>{{ tableData[index].company }}</td>
+          <td>{{ tableData[index].location }}</td>
+          <td>{{ tableData[index].times }}</td>
+          <td
+            @click="throwClick(index)"
+            :style="{
+              color: item.throw ? 'red' : 'green',
+              cursor: 'pointer',
+            }"
+          >
+            {{ item.throw ? "投递简历" : "已投递" }}
+          </td>
+          <td
+            @click="collectClick(index)"
+            :style="{
+              color: item.collect ? 'black' : '#999',
+              cursor: 'pointer',
+            }"
+          >
+            {{ tableData[index].collect ? "收藏" : "取消收藏" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -105,28 +99,24 @@ export default {
     collectClick(index) {
       this.tableData[index].collect = !this.tableData[index].collect;
     },
-    // handleEdit(index, row) {
-    //   console.log(index, row);
-    // },
-    // handleDelete(index, row) {
-    //   console.log(index, row);
-    // },
   },
 };
 </script>
 
 <style>
-.card-header {
+.collect-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 60px;
   padding-right: 20px;
 }
 
-.card-header .button {
+.collect-header span {
   font-size: 14px;
   font-family: PingFang-SC-Regular, PingFang-SC;
   font-weight: 400;
+  cursor: pointer;
   color: #999999;
 }
 
