@@ -7,7 +7,7 @@
 
         <img src="@\views\center\img\默认头像男.png" alt="" />
         <div class="center-person-name">
-          <span>陈长生</span>
+          <span>{{first.pn}}</span>
           <div class="center-person-time">
             <span>最近更新：时间戳</span>
           </div>
@@ -98,6 +98,11 @@ import CenterBrowse from "./components/centerbrowse.vue";
 
 export default {
   name: "CenterIndex",
+  data () {
+    return {
+      first: JSON.parse(localStorage.getItem("inputValue")),
+    }
+  },
   components: {
     CollectMessage,
     CenterBrowse,

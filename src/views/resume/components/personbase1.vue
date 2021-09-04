@@ -8,26 +8,55 @@
         <span @click="editClick">编辑</span>
       </div>
     </div>
-
+    <!-- 个人信息头部 -->
     <div class="base-details" :class="{ detailsHide: isHide }">
       <ul>
-        <li v-for="i in personDetails">
-          <span>{{ i }}</span>
-          <span>{{ first }}</span>
+        <li>
+          <span>姓名：</span>
+          <span>{{ tMessage.pn }}</span>
+        </li>
+        <li>
+          <span>性别：</span>
+          <span>{{ tMessage.ps }}</span>
+        </li>
+        <li>
+          <span>出生日期：</span>
+          <span>{{ tMessage.pb }}</span>
+        </li>
+        <li>
+          <span>工作经验：</span>
+          <span>{{ tMessage.pw }}</span>
+        </li>
+        <li>
+          <span>学历：</span>
+          <span>{{ tMessage.pe }}</span>
+        </li>
+        <li>
+          <span>婚姻状况：</span>
+          <span>{{ tMessage.pm }}</span>
+        </li>
+        <li>
+          <span>手机：</span>
+          <span>{{ tMessage.pp }}</span>
         </li>
       </ul>
     </div>
+
     <!-- <img class="base-img" src="" alt=""> -->
     <div class="base-img">
       <img src="@\views\center\img\默认头像男.png" alt="" />
       <p>上传照片</p>
     </div>
   </div>
-  <person-base ref="aaa" @nothing="miaomiaomiao"></person-base>
+  <person-base
+    ref="aaa"
+    @everything="childEvent1"
+    @nothing="childEvent2"
+  ></person-base>
 </template>
 
 <script>
-import PersonBase from "./personbase.vue";
+import PersonBase from "./personbase2.vue";
 export default {
   name: "ResumePerson",
   components: {
@@ -35,6 +64,7 @@ export default {
   },
   data() {
     return {
+      tMessage: {}, //获取personbase.vue中提交的表单数据
       isHide: false,
       personDetails: [
         "姓名：",
@@ -47,15 +77,30 @@ export default {
       ],
     };
   },
+  created() {
+    // 创建created()生命周期函数  在组件渲染前加载本地缓存
+    localStorage.getItem("inputValue");
+    let xxx = JSON.parse(localStorage.getItem("inputValue"));
+    this.tMessage = xxx
+  },
   methods: {
+    // 获取子组件表单数据
+    childEvent1(value) {
+      this.tMessage = value;
+      // console.log(this.tMessage);
+    },
+
+    // 获取子组件切换事件
+    childEvent2(show) {
+      this.isHide = show;
+    },
+
+    // 切换子组件
     editClick() {
       this.isHide = !this.isHide;
       this.$refs.aaa.isShow = !this.$refs.aaa.isShow;
       // localStorage.removeItem("PersonName")
       // console.log(this.$refs.aaa.isShow);
-    },
-    miaomiaomiao(show) {
-      this.isHide = show;
     },
   },
 };

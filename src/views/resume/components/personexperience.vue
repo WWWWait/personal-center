@@ -134,7 +134,7 @@ export default {
 .person-experience {
   position: relative;
   left: 0;
-  top: 16px;
+  top:48px;
   min-height: 350px;
   background-color: #f8f9fb;
   font-size: 14px;

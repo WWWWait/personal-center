@@ -30,16 +30,19 @@
         <span>我目前已离职，可快速到岗</span>
       </p>
     </div>
+    <person-purpose-2 />
   </div>
 </template>
 
 <script>
+import PersonPurpose2 from "./personpurpose2.vue";
 export default {
   name: "MassagePurpose",
+  components: {
+    PersonPurpose2,
+  },
   data() {
-    return{
-
-    }
+    return {};
   },
   methods: {},
 };
@@ -49,7 +52,7 @@ export default {
 .massage-purpose {
   position: relative;
   left: 0;
-  top: 16px;
+  top: 32px;
   width: 1180px;
   height: 266px;
   background-color: #f8f9fb;
@@ -107,9 +110,10 @@ export default {
   font-family: PingFang-SC-Regular, PingFang-SC;
   font-weight: 400;
   color: #666666;
+  display: none;
 }
 
-.purpose-content p{
-    margin-bottom: 16px;
+.purpose-content p {
+  margin-bottom: 16px;
 }
 </style>
