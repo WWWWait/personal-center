@@ -5,32 +5,36 @@
       <a>必填</a>
       <div class="edit">
         <img src="" alt="" />
-        <span>编辑</span>
+        <span @click="purposeHide">编辑</span>
       </div>
     </div>
-    <div class="purpose-content">
+    <div class="purpose-content" :class="{ purposeshow: purposeShow }">
       <p class="content-first">
         期望岗位：
-        <span>行政文员</span>
+        <span>{{ childData.hw }}</span>
       </p>
       <p class="content-second">
         期望地点：
-        <span>滁州市</span>
+        <span>{{ childData.hl }}</span>
       </p>
       <p class="content-third">
         期望薪资：
-        <span>8000-10000元</span>
+        <span>{{ childData.gm }}</span>
       </p>
       <p class="content-fourth">
         工作类型：
-        <span>全职</span>
+        <span>{{ childData.pw }}</span>
       </p>
       <p class="content-fifth">
         当前状态：
-        <span>我目前已离职，可快速到岗</span>
+        <span>{{ childData.ns }}</span>
       </p>
     </div>
-    <person-purpose-2 />
+    <person-purpose-2
+      ref="person2Event"
+      @childValue="childEle"
+      @childSwitch="childInput"
+    ></person-purpose-2>
   </div>
 </template>
 
@@ -42,30 +46,53 @@ export default {
     PersonPurpose2,
   },
   data() {
-    return {};
+    return {
+      purposeShow: false,
+      childData: {},
+    };
   },
-  methods: {},
+  created() {
+    // 接收子组件的本地缓存
+    localStorage.getItem("HopeWorkDetails");
+    let yyy = JSON.parse(localStorage.getItem("HopeWorkDetails"));
+    this.childData = yyy;
+  },
+  methods: {
+    purposeHide() {
+      this.purposeShow = !this.purposeShow;
+      this.$refs.person2Event.childshow = !this.$refs.person2Event.childshow;
+    },
+    childEle(value) {
+      this.childData = value;
+    },
+    childInput(value) {
+      this.purposeShow = value;
+    },
+  },
 };
 </script>
 
 <style>
+/* .puerposeshow {
+  display: block;
+} */
+
 .massage-purpose {
   position: relative;
-  left: 0;
   top: 32px;
-  width: 1180px;
-  height: 266px;
-  background-color: #f8f9fb;
+  left: 0;
+
+  background-color: #fff;
 }
 
 .purpose-header {
   height: 60px;
-  background-color: #fff;
+  padding:0 40px;
+  border-bottom: 1px solid #efefef;
 }
 
 .purpose-header span {
   display: inline-block;
-  margin-left: 40px;
   margin-top: 22px;
   font-size: 16px;
   font-family: PingFang-SC-Medium, PingFang-SC;
@@ -87,12 +114,10 @@ export default {
   color: #fe6135;
   line-height: 20px;
   text-align: center;
-  border-radius: 2px;
 }
 
 .purpose-header .edit {
   float: right;
-  margin-right: 40px;
 }
 
 .purpose-header .edit span {
@@ -105,15 +130,18 @@ export default {
 }
 
 .purpose-content {
-  padding: 30px 0 0 40px;
+  padding: 30px 40px;
   font-size: 14px;
   font-family: PingFang-SC-Regular, PingFang-SC;
   font-weight: 400;
   color: #666666;
-  display: none;
 }
 
 .purpose-content p {
   margin-bottom: 16px;
+}
+
+.purposeshow {
+  display: none;
 }
 </style>

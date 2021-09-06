@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="resume-header">
+  <div class="resume-header">
+    <div >
       <div class="score">
         <span>65</span>
         <a>简历评分</a>
@@ -51,7 +51,7 @@
   </div>
   <person-base-1></person-base-1>
   <person-purpose></person-purpose>
-  <!-- <person-experience></person-experience> -->
+  <person-experience></person-experience>
 </template>
 
 <script>
@@ -65,7 +65,8 @@ export default {
     PersonBase1,
     PersonPurpose,
     PersonExperience
-  }
+  },
+
 };
 </script>
 

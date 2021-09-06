@@ -7,7 +7,7 @@
 
         <img src="@\views\center\img\默认头像男.png" alt="" />
         <div class="center-person-name">
-          <span>{{first.pn}}</span>
+          <span>{{ first.pn }}</span>
           <div class="center-person-time">
             <span>最近更新：时间戳</span>
           </div>
@@ -20,21 +20,23 @@
 
           <div class="center-person-details">
             <div class="center-person-sex">
-              <span class="center-person-sex1">男 </span>
-              <span>年龄</span>
+              <span class="center-person-sex1">{{ first.pn + "" }} </span>
+              <span>{{ birth }}岁</span>
             </div>
-            |<span class="workyears">1年</span> |<span class="workreword"
-              >6000-10000</span
+            |<span class="workyears">{{ first.pw }}</span> |<span
+              class="workreword"
+              >{{ second.gm }}</span
             >
-            |<span class="worklocation">滁州市</span> |<span class="workstatus"
-              >我目前已经离职，可快速到岗</span
+            |<span class="worklocation">{{ second.hl }}</span> |<span
+              class="workstatus"
+              >{{ second.ns }}</span
             >
           </div>
 
           <br />
 
           <div class="center-person-hope">
-            <span>行政文员</span>
+            <span>{{second.hw}}</span>
           </div>
         </div>
       </div>
@@ -95,13 +97,15 @@
 <script>
 import CollectMessage from "./components/collectmessage.vue";
 import CenterBrowse from "./components/centerbrowse.vue";
+// import { computed } from "@vue/reactivity";
 
 export default {
   name: "CenterIndex",
-  data () {
+  data() {
     return {
       first: JSON.parse(localStorage.getItem("inputValue")),
-    }
+      second: JSON.parse(localStorage.getItem("HopeWorkDetails")),
+    };
   },
   components: {
     CollectMessage,
@@ -110,6 +114,18 @@ export default {
   methods: {
     revise() {
       this.$router.push("/resume");
+    },
+  },
+  computed: {
+    birth() {
+
+        let birthDayTime = new Date(this.first.pb).getTime();
+
+        //当前时间 毫秒
+        let nowTime = new Date().getTime();
+
+        //一年毫秒数(365 * 86400000 = 31536000000)
+        return Math.ceil((nowTime - birthDayTime) / 31536000000);
     },
   },
 };

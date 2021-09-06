@@ -1,5 +1,5 @@
 <template>
-  <div class="person-work">
+  <div class="person-work" :class="{ childShow: childshow }">
     <div class="work-details">
       <form action="">
         <!-- 期望岗位 -->
@@ -12,7 +12,7 @@
               type="text"
               name="name"
               placeholder="请输入您的期望岗位"
-              @blur="personwork(event)"
+              @blur="hopeWork(event)"
             />
           </label>
         </div>
@@ -22,14 +22,10 @@
           <p>
             期望地点
           </p>
-          <label for="location">
-            <input
-              type="text"
-              name="location"
-              placeholder="请输入您的期望的工作地点"
-              @blur="personwork(event)"
-            />
-          </label>
+          <select id="location" @blur="hopeLocation(event)">
+            <option value="" disabled selected hidden>请选择</option>
+            <option v-for="i in personLocation">{{ i }}</option>
+          </select>
         </div>
 
         <!-- 期望薪资 -->
@@ -48,7 +44,7 @@
           <p>
             工作类型
           </p>
-          <select id="type" @blur="workType(event)" >
+          <select id="type" @blur="workType(event)">
             <option value="" disabled selected hidden>请选择</option>
             <option v-for="i in hopeType">{{ i }}</option>
           </select>
@@ -59,7 +55,10 @@
           <p>
             当前状态
           </p>
-          <label for="state"> <input name="state" type="textarea"/></label>
+          <select id="state" @blur="nowState(event)">
+            <option value="" disabled selected hidden>请选择</option>
+            <option v-for="i in personState">{{ i }}</option>
+          </select>
         </div>
       </form>
 
@@ -77,54 +76,89 @@ export default {
   name: "PersonMassage",
   data() {
     return {
-      ipt: null,
-      isShow: true,
-      isActive: false,
-      noActive: false,
+      childshow: true,
+      myHope: {},
+      personLocation: [
+        "琅琊区",
+        "南谯区",
+        "琅琊新区",
+        "苏滁产业园",
+        "其他"],
       howMoney: [
         "<1000",
         "1000-3000",
         "3000-5000",
         "5000-10000",
-        "10000-100000",
+        "<10000",
+        "面议",
       ],
-      hopeType:[
-        "兼职",
-        "全职"
+      hopeType: ["兼职", "全职"],
+      personState: [
+        "我是应届毕业生",
+        "我目前在职，考虑换个工作环境",
+        "我目前已离职，可快速到岗",
+        "我暂时不想找工作",
       ],
-      inputValue: "",
-      obj: {},
-      arr: [],
     };
   },
   methods: {
     clearClick() {},
 
-    // 获取期望工作
-    personwork($event) {},
+    // 获取期待岗位
+    hopeWork($event) {
+      this.myHope.hw = event.target.value;
+    },
+
+    // 获取期望地点
+    hopeLocation($event) {
+      this.myHope.hl = event.target.value;
+    },
 
     // 获取期望薪资
-    giveMoney($event) {},
+    giveMoney($event) {
+      this.myHope.gm = event.target.value;
+    },
 
-    // 获取工作经历
-    personWork($event) {},
+    // 获取工作类型
+    workType($event) {
+      this.myHope.pw = event.target.value;
+    },
 
-    // 提交时，获取提交缓存
+    // 获取现在状态
+    nowState($event) {
+      this.myHope.ns = event.target.value;
+    },
+
+    // 提交时，提交缓存
     btnClick1() {
-      // 发送input数据缓存
+
+    // 发送input数据缓存
+    let localData = JSON.stringify(this.myHope)
+    localStorage.setItem("HopeWorkDetails",localData);
+
+    // 发送input的值
+    this.$emit("childValue",this.myHope);
+
+    // 发送切换申请
+    this.$emit("childSwitch",this.childshow)
+    this.childshow = !this.childshow
+
     },
   },
 };
 </script>
 
 <style lang="less">
-.workEdit {
-  display: block;
+.childShow {
+  display: none;
 }
+
 .person-work {
   position: relative;
   left: 0;
   top: 0;
+  right: 0;
+  bottom: 0;
   width: 1180px;
   height: 410px;
   background-color: #f8f9fb;
@@ -177,10 +211,11 @@ export default {
 }
 
 #money,
-#type {
+#type,
+#location,
+#state {
   width: 360px;
   height: 38px;
-  
   padding-left: 12px;
   background: #ffffff;
   border-radius: 2px;
