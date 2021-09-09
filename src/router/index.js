@@ -7,11 +7,11 @@ import {
 // 路由配置表
 const routes = [{
 
-    path: '/login',
+    path: '/home',
 
-    name: 'login',
+    redirect: '/center',
 
-    component: () => import('@/views/login/')
+    component: () => import('@/views/center/')
 
   },
 

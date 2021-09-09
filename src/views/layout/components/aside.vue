@@ -1,24 +1,26 @@
 <template>
   <div class="aside-nav">
-      <div class="aside-header">
-    <span>招聘个人中心</span>
-  
-    <div class="aside-details">
-      <ul>
-        <li
-          v-for="(i, index) in Aside"
-          :class="{ Active: isActive == index }"
-          @click="AsideClick(index)"
-        >
-          {{ i }}
-        </li>
-      </ul>
-    </div>
+    <div class="aside-header">
+      <span>招聘个人中心</span>
+
+      <div class="aside-details">
+        <ul>
+          <li
+            v-for="(i, index) in Aside"
+            :class="{ Active: isActive == index }"
+            @click="AsideClick(index)"
+          >
+            {{ i }}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import local from "@/assets/local.js";
+
 export default {
   name: "AppAside",
   data() {
@@ -34,7 +36,7 @@ export default {
         "账号设置",
         "发布招聘",
       ],
-      ditails: [
+      details: [
         "center",
         "resume",
         "deliver",
@@ -46,16 +48,23 @@ export default {
         "release",
       ],
       isActive: 0,
-      index: ''
+      index: "",
     };
+  },
+  created() {
+    if (local.get("index")) {
+      this.isActive = local.get("index") || 0;
+    }
   },
   methods: {
     AsideClick(index) {
       this.isActive = index;
-      let msg = this.ditails;
-      this.$emit("itemclick",index);
+      let msg = this.details;
+      this.$emit("itemclick", this.Aside[index], this.details[index]);
       // 侧边导航栏路由跳转
       this.$router.push("/" + msg[index]);
+      local.set("index", index);
+      local.set("Aside", this.Aside[index]);
     },
   },
 };

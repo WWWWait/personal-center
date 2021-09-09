@@ -5,31 +5,31 @@
       <ul>
         <li>
           <span>姓名：</span>
-          <span>{{ childobj.pn }}</span>
+          <span>{{  }}</span>
         </li>
         <li>
           <span>性别：</span>
-          <span>{{ childobj.ps }}</span>
+          <span>{{  }}</span>
         </li>
         <li>
           <span>出生日期：</span>
-          <span>{{ childobj.pb }}</span>
+          <span>{{  }}</span>
         </li>
         <li>
           <span>工作经验：</span>
-          <span>{{ childobj.pw }}</span>
+          <span>{{  }}</span>
         </li>
         <li>
           <span>学历：</span>
-          <span>{{ childobj.pe }}</span>
+          <span>{{  }}</span>
         </li>
         <li>
           <span @click="hunyin">婚姻状况：</span>
-          <span>{{ childobj.pm }}</span>
+          <span>{{  }}</span>
         </li>
         <li>
           <span>手机：</span>
-          <span>{{ childobj.pp }}</span>
+          <span>{{ }}</span>
         </li>
       </ul>
     </div>
@@ -57,9 +57,9 @@ export default {
       ],
     };
   },
-  props: {
-    childobj: Object,
-  },
+  // props: {
+  //   childobj: Object,
+  // },
 
   methods: {
     hunyin() {

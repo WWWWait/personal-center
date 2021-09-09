@@ -1,6 +1,6 @@
 <template>
-  <div class="browse-content" style="height:100%;padding-left:20px">
-    <div class="browse-header">
+  <div class="centerbrowse-content">
+    <div class="centerbrowse-header">
       <span
         style="font-size: 16px;
   font-family: PingFang-SC-Medium, PingFang-SC;
@@ -12,16 +12,16 @@
 
     <!-- 主体 -->
     <table cellpadding="0" cellspacing="0">
-      <thead class="browse-nav">
+      <thead class="centerbrowse-nav">
         <tr>
-          <th style="width:590px;">企业名称</th>
+          <th style="width:590px;padding-left:20px">企业名称</th>
           <th style="width:380px">在招职位</th>
-          <th>关注时间</th>
+          <th style="width:190px">关注时间</th>
         </tr>
       </thead>
       <tbody>
-        <tr class="browse-main" v-for="(item, index) in tableData">
-          <td>{{ tableData[index].company }}</td>
+        <tr class="centerbrowse-main" v-for="(item, index) in tableData">
+          <td style="padding-left:20px">{{ tableData[index].company }}</td>
           <td>{{ tableData[index].location }}</td>
           <td>{{ tableData[index].times }}</td>
         </tr>
@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: "CenterBrowse",
+  name: "Centerbrowse",
   data() {
     return {
       tableData: [
@@ -58,15 +58,15 @@ export default {
 </script>
 
 <style>
-.browse-header {
+.centerbrowse-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 60px;
-  padding-right: 20px;
+  padding:0 20px;
 }
 
-.browse-header span {
+.centerbrowse-header span {
   font-size: 14px;
   font-family: PingFang-SC-Regular, PingFang-SC;
   font-weight: 400;
@@ -74,14 +74,14 @@ export default {
   color: #999999;
 }
 
-.browse-nav {
+.centerbrowse-nav {
   height: 50px;
 }
 
-.browse-nav tr {
+.centerbrowse-nav tr {
   background: #f8f9fb;
 }
-.browse-nav tr th {
+.centerbrowse-nav tr th {
   font-size: 14px;
   font-family: PingFang-SC-Regular, PingFang-SC;
   font-weight: 400;
@@ -89,7 +89,7 @@ export default {
   color: #999999;
 }
 
-.browse-main {
+.centerbrowse-main {
   height: 50px;
   font-size: 14px;
   font-family: PingFang-SC-Regular, PingFang-SC;

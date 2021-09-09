@@ -5,7 +5,7 @@
     <div class="header">
       <div class="nav-top">
         <div class="person-resume">
-          <span @click="resumeClick">我的简历</span>
+          <span @click="headerClick">{{ textHeader }}</span>
         </div>
         <div class="nav-details">
           <span>访问网站</span>
@@ -23,11 +23,12 @@
     </div>
 
     <!-- 侧边栏 -->
-    <app-aside ref="aaa" />
+    <app-aside @itemclick="childClick" />
   </div>
 </template>
 
 <script>
+import local from "@/assets/local.js";
 // 引入navaside组件
 import AppAside from "@/views/layout/components/aside.vue";
 // import { getUserProfile } from "@/api/user.js";
@@ -35,29 +36,32 @@ import AppAside from "@/views/layout/components/aside.vue";
 export default {
   name: "LayoutIndex",
   data() {
-    return {};
+    return {
+      textHeader: "个人中心",
+      routHeader: "",
+    };
   },
   components: {
     AppAside,
-    // created() {
-    //   // 组件初始化完成，请求用户资料
-    //   this.loadUserProfile();
-    // },
-    methods: {
-      // loadUserProfile() {
-      //   getUserProfile().then(res=>{
-      //     console.log(res);
-      //   })
-      // },
-    },
   },
-
+  created() {
+    if (local.get("Aside")) {
+      this.textHeader = local.get("Aside") || 0;
+    }
+  },
   methods: {
     inviteClick() {
       this.$router.push("/invite");
     },
     resumeClick() {
       this.$router.push("/resume");
+    },
+    headerClick() {
+      this.$router.push("/" + this.routHeader);
+    },
+    childClick(itme, rout) {
+      this.textHeader = itme;
+      this.routHeader = rout;
     },
   },
 };

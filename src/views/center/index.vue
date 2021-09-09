@@ -1,5 +1,5 @@
 <template>
-  <div class="center-container">
+  <div>
     <!-- 个人中心--信息 -->
     <div class="center-message">
       <div class="center-person">
@@ -20,7 +20,7 @@
 
           <div class="center-person-details">
             <div class="center-person-sex">
-              <span class="center-person-sex1">{{ first.pn + "" }} </span>
+              <span class="center-person-sex1">{{ first.ps + "" }} </span>
               <span>{{ birth }}岁</span>
             </div>
             |<span class="workyears">{{ first.pw }}</span> |<span
@@ -36,7 +36,7 @@
           <br />
 
           <div class="center-person-hope">
-            <span>{{second.hw}}</span>
+            <span>{{ second.hw }}</span>
           </div>
         </div>
       </div>
@@ -97,19 +97,27 @@
 <script>
 import CollectMessage from "./components/collectmessage.vue";
 import CenterBrowse from "./components/centerbrowse.vue";
-// import { computed } from "@vue/reactivity";
+import local from "@/assets/local.js";
 
 export default {
   name: "CenterIndex",
   data() {
     return {
-      first: JSON.parse(localStorage.getItem("inputValue")),
-      second: JSON.parse(localStorage.getItem("HopeWorkDetails")),
+      first: {},
+      second: {},
     };
   },
   components: {
     CollectMessage,
     CenterBrowse,
+  },
+  created() {
+    // 判断是否存在本地数据
+    if (local.get("personData")) {
+      // 存在，则对first赋值
+      this.first = local.get("personData") || {};
+      this.second = local.get("HopeWorkData") || {};
+    }
   },
   methods: {
     revise() {
@@ -118,14 +126,13 @@ export default {
   },
   computed: {
     birth() {
+      let birthDayTime = new Date(this.first.pb).getTime();
 
-        let birthDayTime = new Date(this.first.pb).getTime();
+      //当前时间 毫秒
+      let nowTime = new Date().getTime();
 
-        //当前时间 毫秒
-        let nowTime = new Date().getTime();
-
-        //一年毫秒数(365 * 86400000 = 31536000000)
-        return Math.ceil((nowTime - birthDayTime) / 31536000000);
+      //一年毫秒数(365 * 86400000 = 31536000000)
+      return Math.ceil((nowTime - birthDayTime) / 31536000000);
     },
   },
 };
@@ -135,9 +142,9 @@ export default {
 .center-message {
   position: relative;
   left: 0;
-  top: 16px;
+  top: 0;
   width: 1180px;
-  height: 285px;
+  height: 275px;
   background-color: #f1f2f6;
 }
 
@@ -306,7 +313,7 @@ export default {
   position: relative;
   left: 0;
   top: 60px;
-  width: 1180px;
+  width: 1160px;
   min-height: 200px;
   padding-left: 20px;
   background-color: #fff;
