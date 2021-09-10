@@ -5,31 +5,31 @@
       <ul>
         <li>
           <span>姓名：</span>
-          <span>{{  }}</span>
+          <span>{{ childFormData.name }}</span>
         </li>
         <li>
           <span>性别：</span>
-          <span>{{  }}</span>
+          <span>{{ childFormData.sex }}</span>
         </li>
         <li>
           <span>出生日期：</span>
-          <span>{{  }}</span>
+          <span>{{ childFormData.date }}</span>
         </li>
         <li>
           <span>工作经验：</span>
-          <span>{{  }}</span>
+          <span>{{ childFormData.exp }}</span>
         </li>
         <li>
           <span>学历：</span>
-          <span>{{  }}</span>
+          <span>{{ childFormData.stu }}</span>
         </li>
         <li>
           <span @click="hunyin">婚姻状况：</span>
-          <span>{{  }}</span>
+          <span>{{ childFormData.mar }}</span>
         </li>
         <li>
           <span>手机：</span>
-          <span>{{ }}</span>
+          <span>{{childFormData.mobile }}</span>
         </li>
       </ul>
     </div>
@@ -45,6 +45,7 @@ export default {
   },
   data() {
     return {
+      childFormData:{},
       // isHide: true,
       personDetails: [
         "姓名：",
@@ -57,9 +58,9 @@ export default {
       ],
     };
   },
-  // props: {
-  //   childobj: Object,
-  // },
+  props: {
+    childFormData: Object,
+  },
 
   methods: {
     hunyin() {

@@ -7,7 +7,7 @@ import {
 // 路由配置表
 const routes = [{
 
-    path: '/home',
+    path: '/',
 
     redirect: '/center',
 
@@ -70,7 +70,7 @@ const routes = [{
 
         name: 'collect',
 
-        component: () => import('@/views/collect/')
+        component: () => import('@/views/collect/collectheader.vue')
       },
       {
         //浏览记录

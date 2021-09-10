@@ -79,7 +79,7 @@ export default {
   bottom: 0;
   width: 160px;
   min-height: 100px;
-  background: #b1c0d1;
+  background: #f7f8fc;
 }
 
 .aside-header {
@@ -105,7 +105,7 @@ export default {
   font-family: PingFang-SC-Medium, PingFang-SC;
   font-weight: 500;
   color: #666666;
-  background-color: #b1c0d1;
+  background-color: #f7f8fc;
   cursor: pointer;
 }
 

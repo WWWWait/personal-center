@@ -1,56 +1,51 @@
 <template>
-  <div class="collect-container">
-    <div class="collect-nav">
-      <span
-        style="font-size: 16px;
-  font-family: PingFang-SC-Medium, PingFang-SC;
-  font-weight: bolder;color:#333;"
-        >我的收藏</span
-      >
-    </div>
-    <div class="collect-all">
-      <el-table
-        :header-cell-style="{ background: '#f8f9fb' }"
-        :data="
-          collectData.slice(
-            (this.pagenum - 1) * this.pageage,
-            this.pagenum * this.pageage
-          )
-        "
-        style="width: 100%"
-      >
-        <el-table-column prop="post" label="职位名称" width="260">
-        </el-table-column>
-        <el-table-column prop="company" label="公司名称" width="290">
-        </el-table-column>
-        <el-table-column prop="location" label="区域" width="130">
-        </el-table-column>
-        <el-table-column prop="times" label="投递时间" width="210">
-        </el-table-column>
-        <el-table-column label="操作" width="290">
-          <template v-slot="change">
-            <el-button size="mini" style="margin-right:20px" type="primary" icon="el-icon-edit" ></el-button>
-            <el-button
+  <div class="collect-all">
+    <el-table
+      :header-cell-style="{ background: '#f8f9fb' }"
+      :data="
+        collectData.slice(
+          (this.pagenum - 1) * this.pageage,
+          this.pagenum * this.pageage
+        )
+      "
+      style="width: 100%"
+    >
+      <el-table-column prop="post" label="职位名称" width="260">
+      </el-table-column>
+      <el-table-column prop="company" label="公司名称" width="290">
+      </el-table-column>
+      <el-table-column prop="location" label="区域" width="130">
+      </el-table-column>
+      <el-table-column prop="times" label="投递时间" width="210">
+      </el-table-column>
+      <el-table-column label="操作" width="290">
+        <template v-slot="change">
+          <el-button
             size="mini"
-              type="warning"
-              icon="el-icon-star-off"
-            ></el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
-    <div class="footer">
-      <el-pagination
-        background
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        v-model:currentPage="pagenum"
-        :page-size="pageage"
-        layout="prev, pager, next,jumper"
-        :total="total"
-      >
-      </el-pagination>
-    </div>
+            style="margin-right:20px"
+            type="primary"
+            icon="el-icon-edit"
+          ></el-button>
+          <el-button
+            size="mini"
+            type="warning"
+            icon="el-icon-star-off"
+          ></el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
+  <div class="footer">
+    <el-pagination
+      background
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      v-model:currentPage="pagenum"
+      :page-size="pageage"
+      layout="prev, pager, next,jumper"
+      :total="total"
+    >
+    </el-pagination>
   </div>
 </template>
 
@@ -167,34 +162,6 @@ export default {
 </script>
 
 <style lang="less">
-.collecColor {
-  color: #999;
-}
-.collect-container {
-  position: relative;
-  left: 0;
-  top: 0;
-  width: 1180px;
-  height: 790px;
-  overflow: hidden;
-}
-
-.collect-nav {
-  position: relative;
-  top: 0;
-  height: 60px;
-  padding: 0 20px;
-  background-color: #fff;
-}
-
-.collect-nav span {
-  font-size: 16px;
-  font-family: PingFang-SC-Medium, PingFang-SC;
-  font-weight: 700;
-  color: #333333;
-  line-height: 60px;
-}
-
 .collect-all {
   position: relative;
   left: 0;

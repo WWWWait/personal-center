@@ -7,7 +7,7 @@
 
         <img src="@\views\center\img\默认头像男.png" alt="" />
         <div class="center-person-name">
-          <span>{{ first.pn }}</span>
+          <span>{{ first.name }}</span>
           <div class="center-person-time">
             <span>最近更新：时间戳</span>
           </div>
@@ -20,23 +20,21 @@
 
           <div class="center-person-details">
             <div class="center-person-sex">
-              <span class="center-person-sex1">{{ first.ps + "" }} </span>
-              <span>{{ birth }}岁</span>
+              <span class="center-person-sex1"
+                >{{ first.sex + "" + "    " }}
+              </span>
+              <span>{{ birth + "岁" + " |" }}</span>
             </div>
-            |<span class="workyears">{{ first.pw }}</span> |<span
-              class="workreword"
-              >{{ second.gm }}</span
-            >
-            |<span class="worklocation">{{ second.hl }}</span> |<span
-              class="workstatus"
-              >{{ second.ns }}</span
-            >
+            <span class="workyears">{{ first.exp + "  |" }}</span
+            ><span class="workreword">{{ second.money +"元"+ " |"}}</span>
+            <span class="worklocation">{{ second.location + " |" }}</span>
+            <span class="workstatus">{{ second.state }}</span>
           </div>
 
           <br />
 
           <div class="center-person-hope">
-            <span>{{ second.hw }}</span>
+            <span>{{ second.work }}</span>
           </div>
         </div>
       </div>
@@ -68,7 +66,7 @@
     </div>
     <!-- 个人中心--收藏 -->
     <div class="center-coll">
-      <collect-message></collect-message>
+      <center-message></center-message>
     </div>
 
     <!-- 个人中心--关注的企业 -->
@@ -95,7 +93,7 @@
 </template>
 
 <script>
-import CollectMessage from "./components/collectmessage.vue";
+import CenterMessage from "./components/centermessage.vue";
 import CenterBrowse from "./components/centerbrowse.vue";
 import local from "@/assets/local.js";
 
@@ -108,15 +106,15 @@ export default {
     };
   },
   components: {
-    CollectMessage,
+    CenterMessage,
     CenterBrowse,
   },
   created() {
     // 判断是否存在本地数据
-    if (local.get("personData")) {
+    if (local.get("formData")) {
       // 存在，则对first赋值
-      this.first = local.get("personData") || {};
-      this.second = local.get("HopeWorkData") || {};
+      this.first = local.get("formData") || {};
+      this.second = local.get("workData") || {};
     }
   },
   methods: {
@@ -126,7 +124,7 @@ export default {
   },
   computed: {
     birth() {
-      let birthDayTime = new Date(this.first.pb).getTime();
+      let birthDayTime = new Date(this.first.date).getTime();
 
       //当前时间 毫秒
       let nowTime = new Date().getTime();

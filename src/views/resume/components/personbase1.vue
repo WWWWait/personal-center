@@ -8,13 +8,14 @@
         <span @click="editClick">编辑</span>
       </div>
     </div>
-    <!-- :rules="rules" -->
+
     <div class="message-details" v-if="isBlock">
       <div class="elForm">
         <el-form
           inline
           label-position="top"
           :model="ruleForm"
+          :rules="rules"
           ref="ruleForm"
           label-width="100px"
           class="demo-ruleForm"
@@ -40,18 +41,18 @@
             <el-button
               style="width:170px"
               @click="womanClick"
-              :class="{ active: !isActive }"
+              :class="{ active: isShow }"
               >女</el-button
             >
           </el-form-item>
 
           <!-- 出生日期 -->
-          <el-form-item label="出生日期" prop="date" style="width:350px">
+          <el-form-item label="出生日期" prop="date1" style="width:350px">
             <el-date-picker
-              v-model="ruleForm.date"
+              v-model="ruleForm.date1"
               type="date"
               format="YYYY 年 MM 月 DD 日"
-              value-format="x"
+              value-format="YYYY-MM-DD"
               placeholder="请选择您的出生日期"
               style="width: 350px;"
               @blur="getBrithDay"
@@ -60,9 +61,9 @@
           </el-form-item>
 
           <!-- 工作经验 -->
-          <el-form-item label="工作经验" prop="Exp">
+          <el-form-item label="工作经验" prop="selectLetterValue">
             <el-select
-              v-model="selectLetterValue"
+              v-model="ruleForm.selectLetterValue"
               placeholder="请选择您的工作年限"
               style="width:350px"
               @change="selectLetterClick"
@@ -77,9 +78,9 @@
           </el-form-item>
 
           <!-- 学历 -->
-          <el-form-item label="学历" prop="Stu">
+          <el-form-item label="学历" prop="selectStuValue">
             <el-select
-              v-model="selectStuValue"
+              v-model="ruleForm.selectStuValue"
               placeholder="请选择您的学历"
               style="width:350px"
               @change="selectStuClick"
@@ -94,9 +95,9 @@
           </el-form-item>
 
           <!-- 婚姻状况 -->
-          <el-form-item label="婚姻状况" prop="Mar">
+          <el-form-item label="婚姻状况" prop="selectMarValue">
             <el-select
-              v-model="selectMarValue"
+              v-model="ruleForm.selectMarValue"
               placeholder="请选择婚姻状况"
               style="width:350px"
               @change="selectMarClick"
@@ -122,10 +123,10 @@
 
         <!-- 保存 -->
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')"
+          <el-button type="primary" style="width:100px;margin-left:20px" @click="submitForm('ruleForm')"
             >保存</el-button
           >
-          <el-button @click="resetForm('ruleForm')">取消</el-button>
+          <el-button style="width:100px" @click="resetForm('ruleForm')">取消</el-button>
         </el-form-item>
       </div>
       <!-- <img class="base-img" src="" alt=""> -->
@@ -134,12 +135,13 @@
         <p>上传照片</p>
       </div>
     </div>
-    <person-base-2 v-else></person-base-2>
+    <person-base-2 :childFormData="formData" v-else></person-base-2>
   </div>
 </template>
 
 <script>
 import PersonBase2 from "./personbase2.vue";
+import local from "@/assets/local.js";
 
 export default {
   name: "Personmessage",
@@ -147,17 +149,26 @@ export default {
     PersonBase2,
   },
   data() {
+    let checkPhone = (rule,value,callback)=>{
+          let reg = /^1[3|4|5|6|7|8|9][0-9]\d{8}$/;
+          if (!reg.test(value)) {
+            callback(new Error('请输入正确的手机号'));
+          } else {
+            callback();
+          }
+        };
     return {
       formData: {},
-      selectLetterValue: "",
-      selectStuValue: "",
-      selectMarValue: "",
-      isActive: true,
+      isActive: false,
+      isShow: false,
       isBlock: true,
       ruleForm: {
+        selectLetterValue: "",
+        selectStuValue: "",
+        selectMarValue: "",
         name: "",
         sex: "",
-        date: "",
+        date1: "",
         Exp: [
           { value: 1, label: "一年以下" },
           { value: 2, label: "一年至三年" },
@@ -179,24 +190,28 @@ export default {
         mobile: "",
       },
       rules: {
-        name: [
-          { required: true, message: "请输入您的姓名", trigger: "blur" },
-          {
-            trigger: "blur",
-          },
+        selectLetterValue: [
+          { required: true, message: "请选择您的工作经验", trigger: "change" },
         ],
+        selectStuValue: [
+          { required: true, message: "请选择您的学历", trigger: "change" },
+        ],
+        selectMarValue: [
+          { required: true, message: "请选择您的婚姻状况", trigger: "change" },
+        ],
+        name: [{ required: true, message: "请输入您的姓名", trigger: "blur" }],
         Exp: [{ required: true, message: "工作经历", trigger: "change" }],
         date1: [
           {
             type: "date",
             required: true,
-            message: "请选择日期",
+            message: "请选择您的出生日期",
             trigger: "change",
           },
         ],
         Stu: [
           {
-            type: "array",
+            type: "object",
             required: true,
             message: "请选择您的教育程度",
             trigger: "change",
@@ -207,24 +222,36 @@ export default {
         ],
         mobile: [
           { required: true, message: "请输入您的手机号", trigger: "blur" },
+          { validator: checkPhone, trigger: "blur" },
         ],
       },
     };
   },
+  created() {
+    if (local.get("formData")) {
+      this.formData = local.get("formData");
+      this.isBlock = false;
+    }
+  },
+
   methods: {
+    // 提交时获取表单数据
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // alert("submit!");
+          this.isBlock = false;
+          // 获取本地缓存
+          local.set("formData", this.formData);
         } else {
           console.log("error submit!!");
           return false;
         }
-        console.log(this.formData);
       });
     },
     resetForm(formName) {
+      this.formData = local.get("formData")
       this.$refs[formName].resetFields();
+      this.isBlock=!this.isBlock
     },
 
     // 姓名
@@ -235,11 +262,13 @@ export default {
     // 性别
     manClick() {
       this.isActive = true;
+      this.isShow = false;
       if (this.isActive) {
         this.formData.sex = "男";
       }
     },
     womanClick() {
+      this.isShow = true;
       this.isActive = false;
       if (this.isActive == false) {
         this.formData.sex = "女";
@@ -248,30 +277,31 @@ export default {
 
     // 出生日期
     getBrithDay() {
-      this.formData.date = this.ruleForm.date;
+      console.log(this.ruleForm.date1);
+      this.formData.date = this.ruleForm.date1;
     },
 
     // 工作经验
     selectLetterClick(value) {
-      this.selectLetterValue = this.ruleForm.Exp[value - 1].label;
+      this.ruleForm.selectLetterValue = this.ruleForm.Exp[value - 1].label;
       this.formData.exp = this.ruleForm.Exp[value - 1].label;
     },
 
     // 学历
     selectStuClick(value) {
-      this.selectStuValue = this.ruleForm.Stu[value - 1].label;
+      this.ruleForm.selectStuValue = this.ruleForm.Stu[value - 1].label;
       this.formData.stu = this.ruleForm.Stu[value - 1].label;
     },
 
     // 婚姻状况
     selectMarClick(value) {
-      this.selectMarValue = this.ruleForm.Mar[value - 1].label;
+      this.ruleForm.selectMarValue = this.ruleForm.Mar[value - 1].label;
       this.formData.mar = this.ruleForm.Mar[value - 1].label;
     },
 
     // 手机号
     getMobile() {
-      this.formData.mobile = this.ruleForm.mobile
+      this.formData.mobile = this.ruleForm.mobile;
     },
     editClick() {
       this.isBlock = true;
@@ -293,7 +323,7 @@ export default {
   position: relative;
   left: 0px;
   top: 0px;
-  height: 500px;
+  height: 480px;
   padding: 30px 0 0 40px;
   background-color: #f8f9fb;
 }

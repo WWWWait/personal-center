@@ -10,8 +10,9 @@
       <span @click="collectAllData">查看更多</span>
     </div>
 
+<collect-main></collect-main>
     <!-- 主体 -->
-    <div>
+    <!-- <div>
       <table cellpadding="0" cellspacing="0">
         <thead class="centerCollenctTh">
           <tr>
@@ -49,15 +50,20 @@
             </td>
           </tr>
         </tbody>
-      </table>
-    </div>
+      </table> -->
+    <!-- </div> -->
   </div>
 </template>
 
 <script>
 // import local from '@/assets/local.js'
+import CollectMain from "@/views/collect/collectmain.vue"
+
 export default {
   name: "CollentMessage",
+  components:{
+CollectMain
+  },
   data() {
     return {
       tableData: [

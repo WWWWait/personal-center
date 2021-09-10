@@ -3,37 +3,34 @@
     <div class="purpose-content">
       <p class="content-first">
         期望岗位：
-        <span @click="clearData">{{ purposeData.hw }}</span>
+        <span>{{ childData.work }}</span>
       </p>
-      <p class="content-second">
+      <p>
         期望地点：
-        <span>{{ purposeData.hl }}</span>
+        <span>{{ childData.location }}</span>
       </p>
-      <p class="content-third">
+      <p>
         期望薪资：
-        <span>{{ purposeData.gm }}</span>
+        <span>{{ childData.money }}</span>
       </p>
-      <p class="content-fourth">
+      <p>
         工作类型：
-        <span>{{ purposeData.pw }}</span>
+        <span>{{ childData.type }}</span>
       </p>
-      <p class="content-fifth">
+      <p>
         当前状态：
-        <span>{{ purposeData.ns }}</span>
+        <span>{{ childData.state }}</span>
       </p>
     </div>
   </div>
 </template>
 
 <script>
-import PersonPurpose2 from "./personpurpose2.vue";
+import local from "@/assets/local.js";
 export default {
   name: "MassagePurpose",
-  components: {
-    PersonPurpose2,
-  },
   props: {
-    purposeData: Object,
+    childData: Object,
   },
   data() {
     return {
@@ -43,7 +40,7 @@ export default {
 
   methods: {
     clearData() {
-      localStorage.removeItem("HopeWorkData");
+      local.remove("workData");
     },
   },
 };
