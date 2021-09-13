@@ -123,17 +123,48 @@
 
         <!-- 保存 -->
         <el-form-item>
-          <el-button type="primary" style="width:100px;margin-left:20px" @click="submitForm('ruleForm')"
+          <el-button
+            type="primary"
+            style="width:100px;margin-left:20px"
+            @click="submitForm('ruleForm')"
             >保存</el-button
           >
-          <el-button style="width:100px" @click="resetForm('ruleForm')">取消</el-button>
+          <el-button style="width:100px" @click="resetForm('ruleForm')"
+            >取消</el-button
+          >
         </el-form-item>
       </div>
-      <!-- <img class="base-img" src="" alt=""> -->
+
       <div class="base-img">
-        <img src="@\views\center\img\默认头像男.png" alt="" />
-        <p>上传照片</p>
+        <!-- https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg -->
+        <!--  -->
+        <!-- 修改头像 -->
+        <el-avatar
+          :size="64"
+          :src="circleUrl"
+          @click="$refs.file.click()"
+        ></el-avatar>
+        <p @click="$refs.file.click()">上传头像</p>
+        <input type="file" hidden ref="file" @change="fileChange()" />
       </div>
+
+      <el-dialog
+        title="修改头像"
+        v-model="dialogVisible"
+        width="30%"
+        @opened="onDialogOpen"
+        @closed="onDialogClose"
+      >
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+
+            <el-button type="primary" @click="dialogVisible = false"
+              >确 定</el-button
+            >
+          </span>
+        </template>
+      </el-dialog>
     </div>
     <person-base-2 :childFormData="formData" v-else></person-base-2>
   </div>
@@ -142,6 +173,8 @@
 <script>
 import PersonBase2 from "./personbase2.vue";
 import local from "@/assets/local.js";
+import "cropperjs/dist/cropper.css";
+import Cropper from "cropperjs";
 
 export default {
   name: "Personmessage",
@@ -149,19 +182,20 @@ export default {
     PersonBase2,
   },
   data() {
-    let checkPhone = (rule,value,callback)=>{
-          let reg = /^1[3|4|5|6|7|8|9][0-9]\d{8}$/;
-          if (!reg.test(value)) {
-            callback(new Error('请输入正确的手机号'));
-          } else {
-            callback();
-          }
-        };
+    let checkPhone = (rule, value, callback) => {
+      let reg = /^1[3|4|5|6|7|8|9][0-9]\d{8}$/;
+      if (!reg.test(value)) {
+        callback(new Error("请输入正确的手机号"));
+      } else {
+        callback();
+      }
+    };
     return {
       formData: {},
       isActive: false,
       isShow: false,
       isBlock: true,
+      circleUrl: "", //头像绑定
       ruleForm: {
         selectLetterValue: "",
         selectStuValue: "",
@@ -231,12 +265,17 @@ export default {
     if (local.get("formData")) {
       this.formData = local.get("formData");
       this.isBlock = false;
+      this.circleUrl = local.get("circleData");
     }
   },
 
   methods: {
     // 提交时获取表单数据
     submitForm(formName) {
+      if (this.circleUrl == "") {
+        alert("您还未上传头像");
+        return false;
+      } else this.circleUrl = local.get("circleData");
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.isBlock = false;
@@ -249,9 +288,9 @@ export default {
       });
     },
     resetForm(formName) {
-      this.formData = local.get("formData")
+      this.formData = local.get("formData");
       this.$refs[formName].resetFields();
-      this.isBlock=!this.isBlock
+      this.isBlock = !this.isBlock;
     },
 
     // 姓名
@@ -305,6 +344,18 @@ export default {
     },
     editClick() {
       this.isBlock = true;
+    },
+
+    fileChange() {
+      // 图片预览
+      const file = this.$refs.file;
+      console.log(file.files[0]);
+      const blobData = window.URL.createObjectURL(file.files[0]);
+      this.circleUrl = blobData;
+      local.set("circleData", this.circleUrl);
+
+      // 避免相同头像无法选择
+      this.$refs.file.value = "";
     },
   },
 };
@@ -399,16 +450,14 @@ export default {
   position: absolute;
   top: 120px;
   right: 40px;
-  img {
-    width: 64px;
-    height: 64px;
-  }
+  text-align: center;
   p {
     font-size: 14px;
     font-family: PingFang-SC-Regular, PingFang-SC;
     font-weight: 400;
     color: #999999;
     text-align: center;
+    margin-top: 10px;
   }
 }
 </style>

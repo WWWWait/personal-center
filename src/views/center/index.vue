@@ -5,7 +5,7 @@
       <div class="center-person">
         <!-- 绑定简历 -->
 
-        <img src="@\views\center\img\默认头像男.png" alt="" />
+        <img :src="imgUrl" alt="" />
         <div class="center-person-name">
           <span>{{ first.name }}</span>
           <div class="center-person-time">
@@ -69,12 +69,12 @@
       <center-message></center-message>
     </div>
 
-    <!-- 个人中心--关注的企业 -->
+    <!-- 个人中心--浏览我的企业 -->
     <div class="center-work">
       <center-browse></center-browse>
     </div>
 
-    <!-- 个人中心--推荐工作 -->
+    <!-- 个人中心--职位推荐 -->
     <div class="center-recommend">
       <div class="recommend-header">
         <span
@@ -101,6 +101,7 @@ export default {
   name: "CenterIndex",
   data() {
     return {
+      imgUrl:'@/views/center/img/默认头像男.png',
       first: {},
       second: {},
     };
@@ -115,6 +116,7 @@ export default {
       // 存在，则对first赋值
       this.first = local.get("formData") || {};
       this.second = local.get("workData") || {};
+      this.imgUrl = local.get("circleUrlData")
     }
   },
   methods: {
@@ -290,28 +292,26 @@ export default {
 .center-coll {
   position: relative;
   left: 0px;
-  top: 20px;
-  right: 0;
-  bottom: 0;
-  width: 1180px;
-  height: 350px;
+  top: 16px;
+  height: 410px;
   background-color: #fff;
+  overflow: hidden;
 }
 
 .center-work {
   position: relative;
   left: 0px;
-  top: 40px;
-  width: 1180px;
-  height: 290px;
+  top: 32px;
+  height: 410px;
   background-color: #fff;
+  overflow: hidden;
 }
+
 
 .center-recommend {
   position: relative;
   left: 0;
-  top: 60px;
-  width: 1160px;
+  top: 48px;
   min-height: 200px;
   padding-left: 20px;
   background-color: #fff;
@@ -332,6 +332,7 @@ export default {
   cursor: pointer;
   color: #999999;
 }
+
 
 .recommend-end {
   height: 140px;

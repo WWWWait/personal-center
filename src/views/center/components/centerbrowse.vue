@@ -10,29 +10,18 @@
       <span>查看更多</span>
     </div>
 
-    <!-- 主体 -->
-    <table cellpadding="0" cellspacing="0">
-      <thead class="centerbrowse-nav">
-        <tr>
-          <th style="width:590px;padding-left:20px">企业名称</th>
-          <th style="width:380px">在招职位</th>
-          <th style="width:190px">关注时间</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="centerbrowse-main" v-for="(item, index) in tableData">
-          <td style="padding-left:20px">{{ tableData[index].company }}</td>
-          <td>{{ tableData[index].location }}</td>
-          <td>{{ tableData[index].times }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <browse-main></browse-main>
   </div>
 </template>
 
 <script>
+import BrowseMain from "@/views/browse/browsemain.vue";
+
 export default {
   name: "Centerbrowse",
+  components: {
+    BrowseMain,
+  },
   data() {
     return {
       tableData: [
@@ -58,12 +47,19 @@ export default {
 </script>
 
 <style>
+.centerbrowse-content {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  height: 420px;
+}
+
 .centerbrowse-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 60px;
-  padding:0 20px;
+  padding: 0 20px;
 }
 
 .centerbrowse-header span {
@@ -72,28 +68,5 @@ export default {
   font-weight: 400;
   cursor: pointer;
   color: #999999;
-}
-
-.centerbrowse-nav {
-  height: 50px;
-}
-
-.centerbrowse-nav tr {
-  background: #f8f9fb;
-}
-.centerbrowse-nav tr th {
-  font-size: 14px;
-  font-family: PingFang-SC-Regular, PingFang-SC;
-  font-weight: 400;
-  text-align: left;
-  color: #999999;
-}
-
-.centerbrowse-main {
-  height: 50px;
-  font-size: 14px;
-  font-family: PingFang-SC-Regular, PingFang-SC;
-  font-weight: 400;
-  color: #333333;
 }
 </style>

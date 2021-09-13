@@ -11,52 +11,11 @@
     </div>
 
 <collect-main></collect-main>
-    <!-- 主体 -->
-    <!-- <div>
-      <table cellpadding="0" cellspacing="0">
-        <thead class="centerCollenctTh">
-          <tr>
-            <th style="width:280px;padding-left:20px">职位名称</th>
-            <th style="width:290px">公司名称</th>
-            <th style="width:150px">区域</th>
-            <th style="width:230px">收藏时间</th>
-            <th style="width:90px">操作</th>
-            <th style="width:140px"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="centerCollenctTT" v-for="(item, index) in tableData">
-            <td style="padding-left:20px">{{ tableData[index].post }}</td>
-            <td>{{ tableData[index].company }}</td>
-            <td>{{ tableData[index].location }}</td>
-            <td>{{ tableData[index].times }}</td>
-            <td
-              @click="throwClick(index)"
-              :style="{
-                color: item.throw ? 'red' : 'green',
-                cursor: 'pointer',
-              }"
-            >
-              {{ item.throw ? "投递简历" : "已投递" }}
-            </td>
-            <td
-              @click="centerCollenctClick(index)"
-              :style="{
-                color: item.centerCollenct ? 'black' : '#999',
-                cursor: 'pointer',
-              }"
-            >
-              {{ tableData[index].centerCollenct ? "收藏" : "取消收藏" }}
-            </td>
-          </tr>
-        </tbody>
-      </table> -->
-    <!-- </div> -->
+   
   </div>
 </template>
 
 <script>
-// import local from '@/assets/local.js'
 import CollectMain from "@/views/collect/collectmain.vue"
 
 export default {
@@ -121,6 +80,8 @@ CollectMain
   position: relative;
   left: 0;
   top: 0px;
+  /* height: 420px;
+  overflow: hidden; */
 }
 
 .centerCollenct-header {

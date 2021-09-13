@@ -7,33 +7,53 @@
         <span @click="AddClick">添加</span>
       </div>
     </div>
-    <div class="experience-main1" :class="{ noHas: isHas }">
-      <div class="noExp" @click="getHas">
-        <span>+ 添加工作经历</span>
-      </div>
-    </div>
-    <div class="exp-main" :class="{ show: isShow }">
-      <div class="experience-1">
-        <span class="company">{{ exValue.name }}</span>
-        <span class="position">{{ exValue.position }}</span>
-        <!-- <span class="times">{{ruleForm.time}}</span> -->
-      </div>
-      <div class="experience-details" style="white-space: pre-line">
-        {{ exValue.desc }}
-      </div>
-    </div>
 
-    <person-experience-2
-      ref="ccc"
-      @experienceValue="getValue"
-      @experienceState="getState"
-    ></person-experience-2>
-    <!-- <slot ref="ccc"></slot> -->
+    <!-- 添加工作经历 -->
+    <div class="addExp" v-if="isShow">
+      <el-form
+        :model="ruleForm"
+        :rules="rules"
+        ref="ruleForm"
+        label-width="200px"
+        class="demo-ruleForm"
+      >
+        <el-form-item label="公司名称" prop="name">
+          <el-input v-model="ruleForm.name" @blur="getName"></el-input>
+        </el-form-item>
+
+        <el-form-item label="岗位" prop="position">
+          <el-input v-model="ruleForm.position" @blur="getPosition"> </el-input>
+        </el-form-item>
+
+        <el-form-item label="工作时间" prop="times">
+          <el-input v-model="ruleForm.times" @blur="getTimes"> </el-input>
+        </el-form-item>
+
+        <el-form-item label="工作内容" prop="desc">
+          <el-input
+            type="textarea"
+            v-model="ruleForm.desc"
+            @blur="getDesc"
+            resize="none"
+            rows="6"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm')"
+            >添加</el-button
+          >
+          <el-button @click="resetForm('ruleForm')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <person-experience-2 :exValue="needData" v-else></person-experience-2>
   </div>
 </template>
 
 <script>
 import PersonExperience2 from "./personexperience2.vue";
+import local from "@/assets/local.js";
 
 export default {
   name: "PersonExperience",
@@ -42,60 +62,86 @@ export default {
   },
   data() {
     return {
-      isHas: false,
       isShow: true,
-      exValue: {
+      index: 0,
+      value1: "",
+      needData: {},
+      needmessage: [],
+      ruleForm: {
         name: "",
         position: "",
+        times: "",
         desc: "",
+      },
+      rules: {
+        name: [
+          { required: true, message: "请输入公司名称", trigger: "blur" },
+          ,
+        ],
+        position: [
+          { required: true, message: "请输入所在岗位", trigger: "blur" },
+        ],
+        times: [
+          {
+            required: true,
+            message: "请输入在该岗位的工作时间",
+            trigger: "blur",
+          },
+        ],
+        desc: [
+          { required: true, message: "请填写具体工作内容", trigger: "blur" },
+        ],
       },
     };
   },
-  // created() {
-  //   let uuu = JSON.parse(localStorage.getItem("localData"));
-  //   this.exValue = uuu;
-  // },
-  mounted() {
-    // localStorage.removeItem("localData");
-    // console.log(document.querySelector(".company").innerText);
-    // if (document.querySelector(".company").innerText ==='') {
-    //   console.log(1);
-    //   // document.querySelector(".experience-main1").remove();
-    //   // console.log(2468);
-    // }
+
+  created() {
+
   },
 
   methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          console.log(this.needData);
+          this.isShow = false;
+          local.set("workExperience", this.needData);
+        } else {
+          // console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+      local.remove("workExperience");
+    },
     AddClick() {
       this.isShow = true;
-      this.isHas = true;
-      this.$refs.ccc.noShow = this.isShow;
     },
-    getHas() {
-      this.isHas = true;
-      this.$refs.ccc.noShow = true;
+    getName() {
+      this.needData.name = this.ruleForm.name;
     },
-    getValue(value) {
-      this.exValue = value;
+    getPosition() {
+      this.needData.position = this.ruleForm.position;
     },
-    getState(state) {
-      this.isShow = state;
+    getTimes() {
+      this.needData.times = this.ruleForm.times;
+    },
+    getDesc() {
+      this.needData.desc = this.ruleForm.desc;
     },
   },
 };
 </script>
 
 <style>
-.noHas {
-  display: none;
-}
-
 .person-experience {
   position: relative;
   left: 0;
   top: 48px;
-  /* padding-bottom: 24px; */
-  background-color: #f8f9fb;
+  min-height: 400px;
+  background-color: #fff;
   font-size: 14px;
   font-family: PingFang-SC-Regular, PingFang-SC;
   font-weight: 400;
@@ -138,65 +184,33 @@ export default {
   left: 0;
   top: 30px;
   width: 800px;
+  margin-bottom: 50px;
 }
 
 .exp-main {
-  min-height: 300px;
+  position: relative;
+  left: 0;
+  top: 0;
+  margin: 0 24px;
+  padding: 14px 16px 28px 16px;
+  background-color: #f8f9fb;
 }
-.experience-1 {
-  margin: 30px 0 0 40px;
-}
-
-.experience-1 .company {
-  margin-right: 12px;
-  font-weight: bolder;
-}
-
-.experience-1 .position {
-  margin: 0 12px;
-}
-
-.experience-1 .times {
-  margin-left: 12px;
-}
+/* .experience-1 {
+  position: relative;
+  top: 14px;
+  left: 24px;
+  width: 1100px;
+  background-color: #f8f9fb;
+  padding:16px;
+} */
 
 .experience-details {
   position: relative;
-  left: 40px;
+  left: 0;
   top: 14px;
   font-size: 14px;
   font-family: PingFang-SC-Regular, PingFang-SC;
   font-weight: 400;
   line-height: 25px;
-}
-
-.experience-details p {
-  margin-top: 12px;
-}
-
-.experience-main1 {
-  position: relative;
-  left: 0;
-  top: 0;
-  min-height: 300px;
-}
-
-.noExp {
-  position: absolute;
-  left: 240px;
-  top: 100px;
-  bottom: 100px;
-  width: 600px;
-  height: 100px;
-  line-height: 100px;
-  text-align: center;
-  color: #4a88f7;
-  cursor: pointer;
-  border: 1px dashed #bfbfbf;
-  background-color: #f4f3f3;
-}
-
-.show {
-  display: none;
 }
 </style>

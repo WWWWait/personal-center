@@ -65,6 +65,7 @@ export default {
   methods: {
     hunyin() {
       localStorage.removeItem("personData");
+      localStorage.removeItem("circleUrlData")
     },
   },
 };
